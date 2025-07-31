@@ -50,6 +50,34 @@ I18nManager.allowRTL(true);
 
 const { width } = Dimensions.get("window");
 
+// Define emerald color constants to fix the undefined error
+const COLORS = {
+  emerald: {
+    50: "#ecfdf5",
+    100: "#d1fae5", 
+    200: "#a7f3d0",
+    300: "#6ee7b7",
+    400: "#34d399",
+    500: "#10b981",
+    600: "#059669",
+    700: "#047857",
+    800: "#065f46",
+    900: "#064e3b",
+  },
+  gray: {
+    50: "#f9fafb",
+    100: "#f3f4f6",
+    200: "#e5e7eb",
+    300: "#d1d5db",
+    400: "#9ca3af",
+    500: "#6b7280",
+    600: "#4b5563",
+    700: "#374151",
+    800: "#1f2937",
+    900: "#111827",
+  },
+};
+
 interface UserStats {
   totalMeals: number;
   totalCalories: number;
@@ -317,8 +345,8 @@ const HomeScreen = React.memo(() => {
         current: dailyGoals.calories,
         target: dailyGoals.targetCalories,
         unit: t("meals.kcal") || "kcal",
-        color: "#E74C3C",
-        icon: <Flame size={24} color="#E74C3C" />,
+        color: COLORS.emerald[600],
+        icon: <Flame size={24} color={COLORS.emerald[600]} />,
         label: t("meals.calories") || "Calories",
       },
       {
@@ -326,8 +354,8 @@ const HomeScreen = React.memo(() => {
         current: dailyGoals.protein,
         target: dailyGoals.targetProtein,
         unit: "g",
-        color: "#9B59B6",
-        icon: <Zap size={24} color="#9B59B6" />,
+        color: COLORS.emerald[700],
+        icon: <Zap size={24} color={COLORS.emerald[700]} />,
         label: t("meals.protein") || "Protein",
       },
       {
@@ -335,8 +363,8 @@ const HomeScreen = React.memo(() => {
         current: waterCups * 250,
         target: 2500,
         unit: "ml",
-        color: "#3498DB",
-        icon: <Droplets size={24} color="#3498DB" />,
+        color: COLORS.emerald[500],
+        icon: <Droplets size={24} color={COLORS.emerald[500]} />,
         label: t("home.water") || "Water",
       },
     ],
@@ -454,7 +482,7 @@ const HomeScreen = React.memo(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#16A085" />
+      <StatusBar barStyle="light-content" backgroundColor={COLORS.emerald[600]} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -462,8 +490,8 @@ const HomeScreen = React.memo(() => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={["#16A085"]}
-            tintColor="#16A085"
+            colors={[COLORS.emerald[500]]}
+            tintColor={COLORS.emerald[500]}
           />
         }
       >
@@ -487,7 +515,7 @@ const HomeScreen = React.memo(() => {
           </Text>
           <View style={styles.mainGoalContainer}>
             <LinearGradient
-              colors={["#16A085", "#1ABC9C"]}
+              colors={[COLORS.emerald[600], COLORS.emerald[500]]}
               style={styles.mainGoalGradient}
             >
               <View style={styles.mainGoalContent}>
@@ -565,7 +593,7 @@ const HomeScreen = React.memo(() => {
         <View style={styles.section}>
           <View style={styles.waterTrackingContainer}>
             <LinearGradient
-              colors={["#3498DB", "#2980B9"]}
+              colors={[COLORS.emerald[500], COLORS.emerald[600]]}
               style={styles.waterTrackingGradient}
             >
               <View style={styles.waterTrackingHeader}>
@@ -650,7 +678,7 @@ const HomeScreen = React.memo(() => {
             <LinearGradient
               colors={
                 calorieStatus === "ahead"
-                  ? ["#2ECC7115", "#2ECC7105"]
+                  ? [COLORS.emerald[500] + "15", COLORS.emerald[500] + "05"]
                   : calorieStatus === "behind"
                   ? ["#E74C3C15", "#E74C3C05"]
                   : ["#F39C1215", "#F39C1205"]
@@ -660,7 +688,7 @@ const HomeScreen = React.memo(() => {
               <View style={styles.statusContent}>
                 <View style={styles.statusIcon}>
                   {calorieStatus === "ahead" ? (
-                    <TrendingUp size={24} color="#2ECC71" />
+                    <TrendingUp size={24} color={COLORS.emerald[500]} />
                   ) : calorieStatus === "behind" ? (
                     <Target size={24} color="#E74C3C" />
                   ) : (
@@ -710,7 +738,7 @@ const HomeScreen = React.memo(() => {
               onPress={() => router.push("/(tabs)/camera")}
             >
               <LinearGradient
-                colors={["#16A085", "#16A085E6"]}
+                colors={[COLORS.emerald[600], COLORS.emerald[600] + "E6"]}
                 style={styles.quickActionGradient}
               >
                 <View style={styles.quickActionIconContainer}>
@@ -727,7 +755,7 @@ const HomeScreen = React.memo(() => {
               onPress={() => router.push("/(tabs)/food-scanner")}
             >
               <LinearGradient
-                colors={["#3498DB", "#3498DBE6"]}
+                colors={[COLORS.emerald[500], COLORS.emerald[500] + "E6"]}
                 style={styles.quickActionGradient}
               >
                 <View style={styles.quickActionIconContainer}>
@@ -744,7 +772,7 @@ const HomeScreen = React.memo(() => {
               onPress={() => router.push("/(tabs)/statistics")}
             >
               <LinearGradient
-                colors={["#9B59B6", "#9B59B6E6"]}
+                colors={[COLORS.emerald[700], COLORS.emerald[700] + "E6"]}
                 style={styles.quickActionGradient}
               >
                 <View style={styles.quickActionIconContainer}>
@@ -766,8 +794,8 @@ const HomeScreen = React.memo(() => {
           <View style={styles.mealsContainer}>
             {isLoading ? (
               <ActivityIndicator
-                size="large"
-                color="#16A085"
+                size="large" 
+                color={COLORS.emerald[500]}
                 style={styles.loader}
               />
             ) : processedMealsData.recentMeals.length > 0 ? (
@@ -891,7 +919,7 @@ const styles = StyleSheet.create({
   mainGoalContainer: {
     borderRadius: 24,
     overflow: "hidden",
-    shadowColor: "#16A085",
+    shadowColor: COLORS.emerald[600],
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
@@ -1066,7 +1094,7 @@ const styles = StyleSheet.create({
   waterTrackingContainer: {
     borderRadius: 24,
     overflow: "hidden",
-    shadowColor: "#3498DB",
+    shadowColor: COLORS.emerald[500],
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
@@ -1207,7 +1235,7 @@ const styles = StyleSheet.create({
   statusStreakNumber: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#16A085",
+    color: COLORS.emerald[600],
   },
   statusStreakLabel: {
     fontSize: 12,
@@ -1306,7 +1334,7 @@ const styles = StyleSheet.create({
   mealCalories: {
     fontSize: 15,
     fontWeight: "600",
-    color: "#16A085",
+    color: COLORS.emerald[600],
   },
   chevronContainer: {
     paddingRight: 16,
